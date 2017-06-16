@@ -1,0 +1,19 @@
+---
+- name: Build and run tweet scraper docker image
+  hosts: searcher
+  roles:
+     - { role: angstwad.docker_ubuntu, sudo: yes }
+  tasks:
+    - name: upload the site directory to the docker host
+      synchronize: src=../scraper dest=/tmp
+
+    - name: build the image
+      command: docker build -t scraper:v0.1 /tmp/scraper
+      become: true
+
+    - name: Create the docker container
+      docker_container:
+        name: scraper
+        image: scraper:v0.1
+      become: true
+

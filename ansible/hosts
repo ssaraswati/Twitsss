@@ -1,0 +1,2 @@
+[scraper]
+<<ip>> ansible_ssh_user=ubuntu
