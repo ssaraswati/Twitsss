@@ -1,7 +1,7 @@
-from slacklogs import SlackLogs
-from scraper import Scraper
 import json
-import config as cfg
+
+from scraper import Scraper
+from scraper.slacklogs import SlackLogs
 
 scraper = Scraper()
 

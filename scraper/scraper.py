@@ -1,7 +1,9 @@
-import config as cfg
-from slacklogs import SlackLogs
-import tweepy
 import json
+
+import config as cfg
+import tweepy
+
+from scraper.slacklogs import SlackLogs
 
 
 class Scraper(object):
