@@ -459,3 +459,4 @@ paket-files/
 *.xsd.cs
 
 # End of https://www.gitignore.io/api/python,pycharm,visualstudio,visualstudiocode
+config.py
