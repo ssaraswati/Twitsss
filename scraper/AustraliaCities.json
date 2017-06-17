@@ -3,48 +3,48 @@
       "NAME": "Melbourne",
       "LATITUDE": -37.814,
       "LONGITUDE": 144.96332,
-      "RADIUS": 25
+      "RADIUS": 50
     },
     {
       "NAME": "Sydney",
       "LATITUDE": -33.86785,
       "LONGITUDE": 151.20732,
-      "RADIUS": 25
+      "RADIUS": 50
     },
     {
       "NAME": "Brisbane",
       "LATITUDE": -27.46794,
       "LONGITUDE": 153.02809,
-      "RADIUS": 25
+      "RADIUS": 50
     },
     {
       "NAME": "Adelaide",
       "LATITUDE": -34.92866,
       "LONGITUDE": 138.59863,
-      "RADIUS": 25
+      "RADIUS": 50
     },
     {
       "NAME": "Perth",
       "LATITUDE": -31.952245,
       "LONGITUDE": 115.8614,
-      "RADIUS": 25
+      "RADIUS": 50
     },
     {
       "NAME": "Hobart",
       "LATITUDE": -42.87936,
       "LONGITUDE": 147.32941,
-      "RADIUS": 25
+      "RADIUS": 50
     },
     {
       "NAME": "Canberra",
       "LATITUDE": -35.28346,
       "LONGITUDE": 149.12807,
-      "RADIUS": 25
+      "RADIUS": 50
     },
     {
       "NAME": "Darwin",
       "LATITUDE": -33.86785,
       "LONGITUDE": 151.20732,
-      "RADIUS": 25
+      "RADIUS": 50
     }
   ] 
