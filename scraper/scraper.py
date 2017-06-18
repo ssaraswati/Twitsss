@@ -19,24 +19,25 @@ class Scraper(object):
         self.api = tweepy.API(auth, wait_on_rate_limit=True,
                               wait_on_rate_limit_notify=True)
 
-    def sendtoLogsChannel(self, message: str):
+    @staticmethod
+    def send_log_slack(message: str):
         log = SlackLogs()
         log.send(message, "scrapebot", ":penguin:", "scrapelogs")
 
-    def scrape_city(self, city_name: str, city_geocode: str, since_id = None, max_id: int=-1) -> List[Any]:
+    def scrape_city(self, city_name: str, city_geocode: str, since_id: int=-1, max_id: int=-1) -> List[Any]:
         tweet_count = 0
         city_tweets = []
 
         while tweet_count < self.maxTweets:
             try:
                 if max_id <= 0:
-                    if not since_id:
+                    if since_id <= 0:
                         new_tweets = self.api.search(geocode=city_geocode, count=self.tweetsPerQry)
                     else:
                         new_tweets = self.api.search(geocode=city_geocode, count=self.tweetsPerQry,
                                                      since_id=since_id)
                 else:
-                    if not since_id:
+                    if since_id <= 0:
                         new_tweets = self.api.search(geocode=city_geocode, count=self.tweetsPerQry,
                                                      max_id=str(max_id - 1))
                     else:
@@ -53,7 +54,7 @@ class Scraper(object):
                 max_id = new_tweets[-1].id
             except tweepy.TweepError as e:
                 slack_line = "Error while downloading tweets,\n Error: " + str(e)
-                self.sendtoLogsChannel(slack_line)
+                self.send_log_slack(slack_line)
                 print("some error : " + str(e))
 
         return city_tweets
