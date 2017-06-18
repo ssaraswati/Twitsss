@@ -19,8 +19,8 @@ slackLine = "Tweet Harvester Searching"
 # log_to_slack(slackLine)
 
 
-def load_json_memory(fileName):
-    with open(fileName) as data_file:
+def load_json_memory(file_name):
+    with open(file_name) as data_file:
         return json.load(data_file)
 
 
