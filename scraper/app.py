@@ -2,11 +2,7 @@ import json
 
 from scraper import Scraper
 from slacklogs import SlackLogs
-from s3upload import S3up
-import tempfile
-import config as cfg
-
-
+from database import CouchDB
 scraper = Scraper()
 
 
@@ -16,6 +12,7 @@ def log_to_slack(message: str):
     log.send(message, "scrapebot", ":penguin:", "scrapelogs")
 
 slackLine = "Tweet Harvester Searching"
+# todo log if prod
 # log_to_slack(slackLine)
 
 
@@ -30,20 +27,27 @@ def scrape_cities(filename):
 
     for city in cities:
         city_geocode = str(city['LATITUDE']) + "," + str(city['LONGITUDE']) + "," + str(city['RADIUS']) + "km"
-        tweets = scraper.scrape_city(city['NAME'], city_geocode)
+        tweets = scraper.scrape_city(city_name=city['NAME'], city_geocode=city_geocode)
 
-        f = tempfile.SpooledTemporaryFile()
-        for item in tweets:
-            line = ("%s\n" % item)
-            f.write(str.encode(line))
-        s3 = S3up(cfg.aws['bucket'])
-        s3.upload(f, city['NAME'])
+        tweets_to_save = []
+        for tweet in tweets:
+            db_item = {
+                '_id': str(tweet.id),
+                'id': tweet.id,
+                'created_at': tweet.created_at.isoformat(),
+                'text': tweet.text,
+                'city': city['NAME'],
+                'user_id': tweet.user.id,
+                'user_home': tweet.user.location,
+                'iso_language_code': tweet.metadata['iso_language_code'],
+                'coordinates': tweet.coordinates,
+                'source': tweet.source,
+                'type': 'tweet'
+                       }
+            tweets_to_save.append(db_item)
+        # send the tweets as a batch
+        couch = CouchDB()
+        couch.update(tweets_to_save)
 
-
-scrape_cities("Melbourne.json")
-
-
-
-
-
+scrape_cities("MelbourneSydneyCity.json")
 
