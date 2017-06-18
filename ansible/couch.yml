@@ -1,0 +1,32 @@
+---
+- name: Setup Couchdb instance
+  hosts: couchdb
+  roles:
+     - { role: angstwad.docker_ubuntu, sudo: yes }
+  tasks:
+
+  - name: Creates mountpoint
+    file: path=/mnt/data/ state=directory
+    become: true
+
+  - name: Mount data volume
+    become: true
+    mount:
+      path: /mnt/data
+      src: /dev/xvdf
+      fstype: ext4
+      state: mounted
+
+  - name: Creates couchdirectory
+    file: path=/mnt/data/couchdb state=directory
+    become: true
+
+  - name: Create couchdb
+    docker_container:
+      name: Couchdb
+      image: klaemo/couchdb:latest
+      ports:
+      - "5984:5984"
+      volumes:
+      - /mnt/data/couchdb:/opt/couchdb/data
+    become: true
