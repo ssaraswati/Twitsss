@@ -2,15 +2,16 @@ import config as cfg
 import json
 import requests
 
+
 class SlackLogs(object):
     webhook_url = cfg.slack['logsurl']
 
-    def send(self, text, name=None, icon=None, channel=None):
-        if name == None:
+    def send(self, text: str, name: str=None, icon: str=None, channel: str=None):
+        if name is None:
             name = "logbot"
-        if channel == None:
+        if channel is None:
             channel = "#logs"
-        if icon == None:
+        if icon is None:
             icon = ":hatched_chick:"
 
         slack_data = {"channel": channel, 'text': text, "icon_emoji": icon, "username": name}

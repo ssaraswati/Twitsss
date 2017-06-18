@@ -1,4 +1,3 @@
-
 twitter = dict(consumer_key='',
                consumer_secret='',
                access_key='',
@@ -7,4 +6,4 @@ twitter = dict(consumer_key='',
 slack = dict(logsurl='')
 
 aws = dict(access_key='',
-               access_secret_key='')
+           access_secret_key='', bucket='')
