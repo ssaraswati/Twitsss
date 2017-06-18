@@ -1,6 +1,6 @@
 ---
 - name: Build and run tweet scraper docker image
-  hosts: searcher
+  hosts: scraper
   roles:
      - { role: angstwad.docker_ubuntu, sudo: yes }
   tasks:

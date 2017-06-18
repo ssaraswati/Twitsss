@@ -478,3 +478,4 @@ scraper/Sydney.json
 scraper/Melbourne.json
 ansible/couch.retry
 scraper/test.py
+ansible/hosts

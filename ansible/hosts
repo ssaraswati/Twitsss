@@ -1,5 +1,0 @@
-[scraper]
-<<ip>> ansible_ssh_user=ubuntu
-
-[couchdb]
-54.146.225.181 ansible_ssh_user=ubuntu
