@@ -25,9 +25,13 @@ def scrape_cities(filename):
 
     cities = load_json_memory(filename)
 
+    cityMax = {}
+    for item in CouchDB().get_db().view(name='_design/couchstats/_view/tweetstats', wrapper=None, reduce=True, group_level=2):
+        cityMax[item.key[1]] = item.value['max']
+
     for city in cities:
         city_geocode = str(city['LATITUDE']) + "," + str(city['LONGITUDE']) + "," + str(city['RADIUS']) + "km"
-        tweets = scraper.scrape_city(city_name=city['NAME'], city_geocode=city_geocode)
+        tweets = scraper.scrape_city(city_name=city['NAME'], city_geocode=city_geocode, since_id=cityMax[city['NAME']])
 
         tweets_to_save = []
         for tweet in tweets:
@@ -48,6 +52,9 @@ def scrape_cities(filename):
         # send the tweets as a batch
         couch = CouchDB()
         couch.update(tweets_to_save)
+        slackLine = "{0}: Saved {1} tweets".format(city['NAME'], len(tweets_to_save))
+        # todo log if prod print otherwise
+        log_to_slack(slackLine)
 
 scrape_cities("MelbourneSydneyCity.json")
 
