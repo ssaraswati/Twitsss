@@ -479,3 +479,4 @@ scraper/Melbourne.json
 ansible/couch.retry
 scraper/test.py
 ansible/hosts
+Tweet2Scrape.pyproj
