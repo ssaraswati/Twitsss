@@ -1,16 +1,16 @@
-from typing import List, Any
-import config as cfg
+from typing import Union, Tuple
+
 import tweepy
 
+import config as cfg
+from database import CouchDB
 from slacklogs import SlackLogs
+from tweet import Tweet
 
 
 class Scraper(object):
     def __init__(self):
-        # todo choose max tweets based on prod / dev
-        self.maxTweets = 90
-        # self.maxTweets = 1000
-        # self.maxTweets = 100000000  # Some arbitrary large number
+        self.maxTweets = cfg.get_fetch_size()
         self.tweetsPerQry = 100  # this is the max the API permits
 
         consumer_key = cfg.twitter['consumer_key']
@@ -25,10 +25,9 @@ class Scraper(object):
         log = SlackLogs()
         log.send(message, "scrapebot", ":penguin:", "scrapelogs")
 
-    def scrape_city(self, city_name: str, city_geocode: str, since_id: int=-1, max_id: int=-1) \
-            -> List[tweepy.models.Status]:
+    def scrape_city(self, city_name: str, city_geocode: str, since_id: int = -1, max_id: int = -1) \
+            -> Tuple[Union[int, int], Union[int, int]]:
         tweet_count = 0
-        city_tweets = []
 
         while tweet_count < self.maxTweets:
             try:
@@ -49,14 +48,33 @@ class Scraper(object):
                 if not new_tweets:
                     print("No more tweets found")
                     break
-                # city_tweets += list(map(lambda x: json.dumps(x._json), new_tweets))
-                city_tweets += new_tweets
-                tweet_count += len(new_tweets)
-                print("Downloaded {0} tweets in {1}".format(tweet_count, city_name))
+
+                tweets_to_save = []
+                for tweet in new_tweets:
+                    db_item = Tweet(id=str(tweet.id),
+                                    created_at=tweet.created_at,
+                                    text=tweet.text,
+                                    city=city_name,
+                                    user_id=tweet.user.id,
+                                    user_home=tweet.user.location,
+                                    source=tweet.source,
+                                    type='tweet')
+                    if tweet.coordinates:
+                        latitude, longitude = tweet.coordinates['coordinates']
+                        db_item.latitude = latitude
+                        db_item.longitude = longitude
+
+                    tweets_to_save.append(db_item)
+
+                couch = CouchDB()
+                couch.update(tweets_to_save)
+
+                tweet_count += len(tweets_to_save)
+
                 max_id = new_tweets[-1].id
             except tweepy.TweepError as e:
                 slack_line = "Error while downloading tweets,\n Error: " + str(e)
                 self.send_log_slack(slack_line)
                 print("some error : " + str(e))
-
-        return city_tweets
+        print("Downloaded {0} tweets in {1}".format(tweet_count, city_name))
+        return tweet_count, max_id
