@@ -14,6 +14,8 @@ class CouchDB(object):
                 cfg.couch['host']) + ':' + str(cfg.couch['port'])
 
         database_name = cfg.couch['db']
+        if not cfg.prod:
+            database_name += '_dev'
         try:
             couch_client = couchdb.Server(server)
         except:
