@@ -6,7 +6,7 @@
  */
 function(doc) {
     if (doc.type === "tweet"){
-        emit(['Aus',doc.city], doc.id)
+        emit(['Aus',doc.city], parseInt(doc._id, 10))
     }
 
 }
