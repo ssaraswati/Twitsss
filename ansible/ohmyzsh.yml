@@ -1,0 +1,21 @@
+---
+- name: Install oh my zsh
+  hosts: all
+  roles:
+    - role: gantsign.oh-my-zsh
+      users:
+        - username: ubuntu
+          oh_my_zsh:
+            theme: af-magic
+            plugins:
+              - git
+              - tmux
+              - docker
+        - username: root
+          oh_my_zsh:
+            theme: bira
+            plugins:
+              - git
+              - tmux
+              - docker
+
