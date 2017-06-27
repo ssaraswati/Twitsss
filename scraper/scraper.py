@@ -6,6 +6,9 @@ import config as cfg
 from database import CouchDB
 from slacklogs import SlackLogs
 from tweet import Tweet
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class Scraper(object):
@@ -46,7 +49,7 @@ class Scraper(object):
                                                      max_id=str(max_id - 1),
                                                      since_id=since_id)
                 if not new_tweets:
-                    print("No more tweets found")
+                    logger.info("No more tweets found")
                     break
 
                 tweets_to_save = []
@@ -75,6 +78,6 @@ class Scraper(object):
             except tweepy.TweepError as e:
                 slack_line = "Error while downloading tweets,\n Error: " + str(e)
                 self.send_log_slack(slack_line)
-                print("some error : " + str(e))
-        print("Downloaded {0} tweets in {1}".format(tweet_count, city_name))
+                logger.error("some error : " + str(e))
+        logger.info("Downloaded {0} tweets in {1}".format(tweet_count, city_name))
         return tweet_count, max_id

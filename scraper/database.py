@@ -1,6 +1,9 @@
 import couchdb
 from couchdb import ResourceNotFound
 import config as cfg
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class CouchDB(object):
@@ -19,17 +22,16 @@ class CouchDB(object):
         try:
             couch_client = couchdb.Server(server)
         except:
-            print("Cannot find CouchDB Server ... Exiting\n")
+            logger.critical("Cannot find CouchDB Server ... Exiting\n")
             raise
         try:
             self.db = couch_client[database_name]
         except ResourceNotFound:
-            print("Couldn't find database trying to create it")
+            logger.warning("Couldn't find database trying to create it")
             self.db = couch_client.create(database_name)
         except Exception as e:
-            print("Couldn't load specified database: {}".format(database_name))
-            print("Confirm database has been created")
-            print(type(e).__name__)
+            logger.critical("Couldn't load specified database: {}".format(database_name))
+            logger.critical("Confirm database has been created")
 
     def save(self, data):
         return self.db.save(data)
