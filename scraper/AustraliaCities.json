@@ -1,50 +1,122 @@
 [
     {
       "NAME": "Melbourne",
-      "LATITUDE": -37.814,
-      "LONGITUDE": 144.96332,
+      "LATITUDE": -37.9722342,
+      "LONGITUDE": 144.772957,
       "RADIUS": 50
     },
     {
       "NAME": "Sydney",
-      "LATITUDE": -33.86785,
-      "LONGITUDE": 151.20732,
+      "LATITUDE": -33.8479731,
+      "LONGITUDE": 150.6517831,
       "RADIUS": 50
     },
     {
       "NAME": "Brisbane",
-      "LATITUDE": -27.46794,
-      "LONGITUDE": 153.02809,
+      "LATITUDE": -27.3818611,
+      "LONGITUDE": 152.7130223,
       "RADIUS": 50
     },
     {
       "NAME": "Adelaide",
-      "LATITUDE": -34.92866,
-      "LONGITUDE": 138.59863,
+      "LATITUDE": -35.0004451,
+      "LONGITUDE": 138.3310075,
       "RADIUS": 50
     },
     {
       "NAME": "Perth",
-      "LATITUDE": -31.952245,
-      "LONGITUDE": 115.8614,
+      "LATITUDE": -32.0397559,
+      "LONGITUDE": 115.681355,
       "RADIUS": 50
     },
     {
       "NAME": "Hobart",
-      "LATITUDE": -42.87936,
-      "LONGITUDE": 147.32941,
+      "LATITUDE": -42.8823399,
+      "LONGITUDE": 147.3197967,
       "RADIUS": 50
     },
     {
       "NAME": "Canberra",
-      "LATITUDE": -35.28346,
-      "LONGITUDE": 149.12807,
+      "LATITUDE": -35.2813046,
+      "LONGITUDE": 149.124822,
       "RADIUS": 50
     },
     {
       "NAME": "Darwin",
-      "LATITUDE": -33.86785,
-      "LONGITUDE": 151.20732,
+      "LATITUDE": -12.4258647,
+      "LONGITUDE": 130.7932231,
+      "RADIUS": 50
+    },
+    {
+      "NAME": "Gold_Coast",
+      "LATITUDE": -28.0847022,
+      "LONGITUDE": 153.4240323,
+      "RADIUS": 50
+    },
+    {
+      "NAME": "Newcastle",
+      "LATITUDE": -32.9762968,
+      "LONGITUDE": 151.5496176,
+      "RADIUS": 50
+    },
+    {
+      "NAME": "Sunshine_Coast",
+      "LATITUDE": -26.6061708,
+      "LONGITUDE": 152.9340735,
+      "RADIUS": 50
+    },
+    {
+      "NAME": "Wollongong",
+      "LATITUDE": -34.428216,
+      "LONGITUDE": 150.8754484,
+      "RADIUS": 50
+    },
+    {
+      "NAME": "Townsville",
+      "LATITUDE": -19.259813,
+      "LONGITUDE": 146.8001348,
+      "RADIUS": 50
+    },
+    {
+      "NAME": "Cairns",
+      "LATITUDE": -16.880177,
+      "LONGITUDE": 145.5758057,
+      "RADIUS": 50
+    },
+    {
+      "NAME": "Toowoomba",
+      "LATITUDE": -27.5734205,
+      "LONGITUDE": 151.8568429,
+      "RADIUS": 50
+    },
+    {
+      "NAME": "Ballarat",
+      "LATITUDE": -37.5672953,
+      "LONGITUDE": 143.7827013,
+      "RADIUS": 50
+    },
+    {
+      "NAME": "Bendigo",
+      "LATITUDE": -36.7561442,
+      "LONGITUDE": 144.2626424,
+      "RADIUS": 50
+    },
+    {
+      "NAME": "Albury",
+      "LATITUDE": -36.073406,
+      "LONGITUDE": 146.8984697,
+      "RADIUS": 50
+    },
+    {
+      "NAME": "Launceston",
+      "LATITUDE": -41.4333495,
+      "LONGITUDE": 147.1263772,
+      "RADIUS": 50
+    },
+    {
+      "NAME": "Geelong",
+      "LATITUDE": -38.148105,
+      "LONGITUDE": 144.3453714,
       "RADIUS": 50
     }
   ] 
