@@ -1,4 +1,2 @@
 tweepy==3.5.0
-tinys3
-requests
-couchdb==1.1
+boto3

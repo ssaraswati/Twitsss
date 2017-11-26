@@ -481,3 +481,7 @@ scraper/test.py
 ansible/hosts
 Tweet2Scrape.pyproj
 *.retry
+
+
+.vscode/
+
