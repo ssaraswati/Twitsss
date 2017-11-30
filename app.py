@@ -96,5 +96,5 @@ def run():
 
 if __name__ == "__main__":
     LOG_STRING = "[%(asctime)s] %(levelname)s %(name)s:%(funcName)s:%(lineno)s - %(message)s"
-    logging.basicConfig(format=LOG_STRING, level=logging.INFO)
+    logging.basicConfig(format=LOG_STRING, level=logging.ERROR)
     run()
