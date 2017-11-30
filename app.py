@@ -7,10 +7,8 @@ from logstyles import BraceMessage as __
 
 class AWSS3UploadBuffer:
     tweets = []
-    def __init__(self, aws_access_key_id, aws_secret_access_key, region, bucket_name, prefix, buffersize):
-        self.session = Session(aws_access_key_id=aws_access_key_id,
-                               aws_secret_access_key=aws_secret_access_key,
-                               region_name=region)
+    def __init__(self, region, bucket_name, prefix, buffersize):
+        self.session = Session(region_name=region)
         self.s3 = self.session.resource("s3")
         self.bucket_name = bucket_name
         self.prefix = prefix
