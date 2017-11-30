@@ -1,3 +1,15 @@
 # Scrapes tweets and stores them in s3
 
-rename example.config.py to config.py and fill in values run with app.py with python 3 or build a docker image from included Dockerfile
+set environment variables
+
+
+export AWS_REGION=us-east-1
+export AWS_BUCKET_NAME=tweets
+export AWS_BUCKET_PREFIX=melbourne
+
+export TWITTER_CONSUMER_KEY=asdf1234
+export TWITTER_CONSUMER_SECRET=asdf1234
+export TWITTER_ACCESS_KEY=asdf1234
+export TWITTER_ACCESS_SECRET=asdf1234
+
+BOUNDING_BOX="144.0,-38.3,145.7,-37.5"

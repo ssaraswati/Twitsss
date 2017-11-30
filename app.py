@@ -2,7 +2,7 @@ import sys, os, json, datetime, time, logging
 import tweepy
 import boto3
 from boto3.session import Session
-import config as cfg
+import os
 from logstyles import BraceMessage as __
 
 class AWSS3UploadBuffer:
@@ -76,25 +76,25 @@ class CustomStreamListener(tweepy.StreamListener):
 def run():
     logging.info(__('Starting tweet to s3 streaming scraper @ {0}', datetime.datetime.now()))
 
-    s3buffer = AWSS3UploadBuffer(cfg.aws['access_key'],
-                                 cfg.aws['access_secret_key'],
-                                 cfg.aws['region'],
-                                 cfg.aws['bucket'],
-                                 cfg.tag,
-                                 cfg.buffersize)
+    bounding = [float(i) for i in os.environ.get("BOUNDING_BOX").split(",")]
+    
+    s3buffer = AWSS3UploadBuffer(os.environ['AWS_REGION'],
+                                 os.environ['AWS_BUCKET_NAME'],
+                                 os.environ['AWS_BUCKET_PREFIX'],
+                                 100)
 
-    auth = tweepy.OAuthHandler(cfg.twitter['consumer_key'],
-                               cfg.twitter['consumer_secret'])
+    auth = tweepy.OAuthHandler(os.environ['TWITTER_CONSUMER_KEY'],
+                               os.environ['TWITTER_CONSUMER_SECRET'])
 
-    auth.set_access_token(cfg.twitter['access_key'],
-                          cfg.twitter['access_secret'])
+    auth.set_access_token(os.environ['TWITTER_ACCESS_KEY'],
+                          os.environ['TWITTER_ACCESS_SECRET'])
     tweepy.API(auth)
     connect_msg = 'Connected to twitter with consumer key: {0}, {1} access_secret: *****'
-    logging.info(__(connect_msg, cfg.twitter['consumer_key'], cfg.twitter['access_key']))
-    logging.info(__('Using Location filter with bounding box of {0}', cfg.boundingBox))
-    listener = CustomStreamListener(s3buffer, cfg.geo_only)
+    logging.info(__(connect_msg, os.environ['TWITTER_CONSUMER_KEY'], os.environ['TWITTER_ACCESS_KEY']))
+    logging.info(__('Using Location filter with bounding box of {0}', bounding)
+    listener = CustomStreamListener(s3buffer, True)
     tweet_stream = tweepy.streaming.Stream(auth, listener)
-    tweet_stream.filter(locations=cfg.boundingBox)
+    tweet_stream.filter(locations=bounding)
 
 if __name__ == "__main__":
     LOG_STRING = "[%(asctime)s] %(levelname)s %(name)s:%(funcName)s:%(lineno)s - %(message)s"
