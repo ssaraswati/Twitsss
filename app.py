@@ -91,7 +91,7 @@ def run():
     tweepy.API(auth)
     connect_msg = 'Connected to twitter with consumer key: {0}, {1} access_secret: *****'
     logging.info(__(connect_msg, os.environ['TWITTER_CONSUMER_KEY'], os.environ['TWITTER_ACCESS_KEY']))
-    logging.info(__('Using Location filter with bounding box of {0}', bounding)
+    logging.info(__('Using Location filter with bounding box of {0}', bounding))
     listener = CustomStreamListener(s3buffer, True)
     tweet_stream = tweepy.streaming.Stream(auth, listener)
     tweet_stream.filter(locations=bounding)
