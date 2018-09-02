@@ -1,16 +1,11 @@
 import sys, os, json, datetime, time, logging
 import tweepy
-import boto3
-from boto3.session import Session
 import os
 from logstyles import BraceMessage as __
 
-class AWSS3UploadBuffer:
+class WriteBuffer:
     tweets = []
-    def __init__(self, region, bucket_name, prefix, buffersize):
-        self.session = Session(region_name=region)
-        self.s3 = self.session.resource("s3")
-        self.bucket_name = bucket_name
+    def __init__(self, prefix, buffersize):
         self.prefix = prefix
         self.buffersize = buffersize
 
@@ -24,22 +19,20 @@ class AWSS3UploadBuffer:
         add_msg = 'Buffer size:{0}/{3} Latest tweet: {1} id: {2}'
         logging.info(__(add_msg, tweets_in_buffer, tweet['text'], tweet['id_str'], self.buffersize))
         if tweets_in_buffer >= self.buffersize:
-            self.upload_now()
+            self.write_tweets()
 
-    def upload_now(self):
+    def write_tweets(self):
         """
-        Uploads the current buffer of tweets to s3 and clears the buffer
+        Write the tweets to storeage and clears the buffer
         """
-        keyprefix = '' if self.prefix is None else self.prefix + '/'
-        key = '{0}{1}.json'.format(keyprefix, int(time.time()))
-        json_content_type = {'Content-Type': 'application/json'}
-        try:
-            s3_object = self.s3.Object(self.bucket_name, key)
-            s3_object.put(Body=json.dumps(self.tweets), Metadata=json_content_type)
-            logging.info(__('Saved {0} tweets to s3 bucket: {1} key: {2}', self.tweets, self.bucket_name, key))
+        path = '{0}/{1}.json'.format(self.prefix, int(time.time()))
+        try:         
+            with open(path, 'w') as outfile:
+                json.dump(self.tweets, outfile)
+            logging.info(__('Saved {0} tweets to {1}', self.tweets, path))
             self.tweets = []
         except:
-            logging.error(__('Failed to save {0} tweets to s3 bucket: {1} key: {2}', self.tweets, self.bucket_name, key))
+            logging.error(__('Failed to save {0} tweets {1}', self.tweets, path))
 
 
 class CustomStreamListener(tweepy.StreamListener):
@@ -76,10 +69,7 @@ def run():
 
     bounding = [float(i) for i in os.environ.get("BOUNDING_BOX").split(",")]
     
-    s3buffer = AWSS3UploadBuffer(os.environ['AWS_REGION'],
-                                 os.environ['AWS_BUCKET_NAME'],
-                                 os.environ['AWS_BUCKET_PREFIX'],
-                                 100)
+    tweetBuffer = WriteBuffer(os.environ['DATA_PATH'], int(os.environ['BUFFER_SIZE']))
 
     auth = tweepy.OAuthHandler(os.environ['TWITTER_CONSUMER_KEY'],
                                os.environ['TWITTER_CONSUMER_SECRET'])
@@ -90,11 +80,12 @@ def run():
     connect_msg = 'Connected to twitter with consumer key: {0}, {1} access_secret: *****'
     logging.info(__(connect_msg, os.environ['TWITTER_CONSUMER_KEY'], os.environ['TWITTER_ACCESS_KEY']))
     logging.info(__('Using Location filter with bounding box of {0}', bounding))
-    listener = CustomStreamListener(s3buffer, True)
+    listener = CustomStreamListener(tweetBuffer, bool(os.environ['GEO_ONLY']))
     tweet_stream = tweepy.streaming.Stream(auth, listener)
     tweet_stream.filter(locations=bounding)
 
 if __name__ == "__main__":
+    print("Starting tweet scraper")
     LOG_STRING = "[%(asctime)s] %(levelname)s %(name)s:%(funcName)s:%(lineno)s - %(message)s"
     logging.basicConfig(format=LOG_STRING, level=logging.ERROR)
     run()

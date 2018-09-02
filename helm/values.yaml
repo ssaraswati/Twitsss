@@ -1,0 +1,44 @@
+scraper:
+  repository: twitsss
+  tag: latest
+  pullPolicy: IfNotPresent
+
+scrapers:
+  - description: melbourne
+    boundingBox: "144.5,-38.1,145.5,-37.5"
+    bufferSize: 5
+    geoOnly: false
+    twitterConsumerKey: 
+    twitterConsumerSecret: 
+    twitterAccessKey: 
+    twitterAccessSecret: 
+
+  - description: sydney
+    boundingBox: "150.5,-34.1,151.5,-33.5"
+    bufferSize: 5
+    geoOnly: false
+    twitterConsumerKey: 
+    twitterConsumerSecret: 
+    twitterAccessKey: 
+    twitterAccessSecret: 
+
+persistence:
+  enabled: true
+  ## A manually managed Persistent Volume and Claim
+  ## Requires persistence.enabled: true
+  ## If defined, PVC must be created manually before volume will be bound
+  # existingClaim:
+
+  ## twitter data Persistent Volume Storage Class
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  # storageClass: "-"
+  accessMode: ReadWriteMany
+  size: 8Gi
+  mountPath: /twitter
+
+  # annotations: {}
