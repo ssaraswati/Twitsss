@@ -1,15 +1,10 @@
-# Scrapes tweets and stores them in s3
+# Kubernetes Twitter scraper
+Install with helm
 
-set environment variables
+```
+docker build -t twitsss .
+helm upgrade --install scraper helm
+```
 
-
-export AWS_REGION=us-east-1
-export AWS_BUCKET_NAME=tweets
-export AWS_BUCKET_PREFIX=melbourne
-
-export TWITTER_CONSUMER_KEY=asdf1234
-export TWITTER_CONSUMER_SECRET=asdf1234
-export TWITTER_ACCESS_KEY=asdf1234
-export TWITTER_ACCESS_SECRET=asdf1234
-
-BOUNDING_BOX="144.0,-38.3,145.7,-37.5"
+# Configuration
+credentials and scraping area configured via values
