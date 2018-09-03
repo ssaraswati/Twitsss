@@ -1,22 +1,13 @@
 scraper:
-  repository: twitsss
+  repository: shyamtech/twitsss
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 scrapers:
   - description: melbourne
     boundingBox: "144.5,-38.1,145.5,-37.5"
-    bufferSize: 5
-    geoOnly: false
-    twitterConsumerKey: 
-    twitterConsumerSecret: 
-    twitterAccessKey: 
-    twitterAccessSecret: 
-
-  - description: sydney
-    boundingBox: "150.5,-34.1,151.5,-33.5"
-    bufferSize: 5
-    geoOnly: false
+    bufferSize: 100
+    geoOnly: true
     twitterConsumerKey: 
     twitterConsumerSecret: 
     twitterAccessKey: 
