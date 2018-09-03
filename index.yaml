@@ -1,0 +1,13 @@
+apiVersion: v1
+entries:
+  twitsss:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: 2018-09-03T21:41:52.1275727+10:00
+    description: A Helm chart for Kubernetes
+    digest: 2f57244512c4f81c3029a38d8b1f1f66c6f53a650adcbf2fbc57f7aa0e5456a2
+    name: twitsss
+    urls:
+    - https://ssaraswati.github.io/Twitsss/twitsss-0.1.0.tgz
+    version: 0.1.0
+generated: 2018-09-03T21:41:52.1238647+10:00
