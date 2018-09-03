@@ -1,11 +1,10 @@
 # Kubernetes Twitter scraper
 Built with tweepy to listen to twitters streaming api for a geo fenced area, optionally only record tags with actual lat/long values
 
-
+# TLDR
 ```console
-$ git clone git@github.com:ssaraswati/Twitsss.git
-$ cd Twitsss
-$ helm install helm
+$ helm repo add twitsss https://ssaraswati.github.io/Twitsss
+$ helm install twitsss/twitsss
 ```
 
 ## Introduction
@@ -20,9 +19,8 @@ This chart bootstraps an Twitter scraper deployment on a [Kubernetes](http://kub
 To install the chart with the release name `my-release`:
 
 ```console
-$ git clone git@github.com:ssaraswati/Twitsss.git
-$ cd Twitsss
-$ helm install --name my-release helm
+$ helm repo add twitsss https://ssaraswati.github.io/Twitsss
+$ helm install twitsss/twitsss
 ```
 
 The command deploys Twitsss on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
