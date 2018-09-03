@@ -1,11 +1,95 @@
 # Kubernetes Twitter scraper
 Built with tweepy to listen to twitters streaming api for a geo fenced area, optionally only record tags with actual lat/long values
 
-## Install with helm
-```
-docker build -t twitsss .
-helm upgrade --install scraper helm
+
+```console
+$ git clone git@github.com:ssaraswati/Twitsss.git
+$ cd Twitsss
+$ helm install helm
 ```
 
+## Introduction
+
+This chart bootstraps an Twitter scraper deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+
+## Prerequisites
+  - Kubernetes 1.8+
+
+## Installing the Chart
+
+To install the chart with the release name `my-release`:
+
+```console
+$ git clone git@github.com:ssaraswati/Twitsss.git
+$ cd Twitsss
+$ helm install --name my-release helm
+```
+
+The command deploys Twitsss on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
+
+> **Tip**: List all releases using `helm list`
+
+## Uninstalling the Chart
+
+To uninstall/delete the `my-release` deployment:
+
+```console
+$ helm delete my-release
+```
+
+The command removes all the Kubernetes components associated with the chart and deletes the release.
+$ helm install helm
+```
+
+## Introduction
+
+This chart bootstraps an Twitsss deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+
+## Prerequisites
+  - Kubernetes 1.6+
+
+## Installing the Chart
+
+To install the chart with the release name `my-release`:
+
+```console
+$ helm install --name my-release stable/Twitsss
+```
+
+The command deploys Twitsss on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
+
+> **Tip**: List all releases using `helm list`
+
+## Uninstalling the Chart
+
+To uninstall/delete the `my-release` deployment:
+
+```console
+$ helm delete my-release
+```
+
+The command removes all the Kubernetes components associated with the chart and deletes the release.
+
 ## Configuration
-credentials and scraping area configured via values file
+
+The following table lists the configurable parameters of the Hubot chart and their default values.
+
+Parameter | Description | Default
+--- | --- | ---
+`scraper.image.repository` | container image repository | `twitsss`
+`scraper.image.tag` | container image tag | `latest`
+`scraper.image.pullPolicy` | container image pull policy | `Always`
+`scrapers.[0].description` | name what area you are scraping | `melbourne`
+`scrapers.[0].boundingBox` | lat long bounding box to listen to | `144.5,-38.1,145.5,-37.5`
+`scrapers.[0].bufferSize` | how many tweets to save in memory before writing to disk | `100`
+`scrapers.[0].geoOnly` | filter saved tweets to only those with lat long | `true`
+`scrapers.[0].twitterConsumerKey` | twitter ConsumerKey |  _empty_
+`scrapers.[0].twitterConsumerSecret` | twitter ConsumerSecret |  _empty_
+`scrapers.[0].twitterAccessKey` | twitter AccessKey |  _empty_
+`scrapers.[0].twitterAccessSecret` | twitter AccessSecret |  _empty_
+`persistence.enabled` | Enables persistent volume - PV provisioner support necessary | true
+`persistence.accessMode` | PVC Access Mode | ReadWriteMany
+`persistence.size` | PVC Size | 8Gi
+`persistence.storageClass` | PVC Storage Class | _empty_
+`persistence.mountPath` | PVC Storage Class | /twitter
+
